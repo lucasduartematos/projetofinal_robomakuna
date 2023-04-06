@@ -1,0 +1,7 @@
+flask
+gspread
+oauth2client
+pandas
+requests
+beautifulsoup4
+python-telegram-bot
