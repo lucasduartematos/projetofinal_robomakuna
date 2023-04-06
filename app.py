@@ -6,6 +6,7 @@ from flask import Flask, Response
 from oauth2client.service_account import ServiceAccountCredentials
 from bs4 import BeautifulSoup
 import telegram
+pip install gunicorn
 
 
 TELEGRAM_API_KEY = os.environ["TELEGRAM_API_KEY"]
