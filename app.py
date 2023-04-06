@@ -1,6 +1,5 @@
-pip install gspread
-
 import os
+
 import gspread
 import requests
 import pandas as pd
