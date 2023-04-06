@@ -4,8 +4,7 @@ import gspread
 import requests
 import pandas as pd
 import telegram
-from flask import Flask, request
-from flask import Flask, Response
+from flask import Flask, request, render_template
 from oauth2client.service_account import ServiceAccountCredentials
 from tchan import ChannelScraper
 from bs4 import BeautifulSoup
@@ -50,9 +49,5 @@ def noticias_indigenas():
         link=noticia.find('a').get('href') 
         lista_noticias.append([manchete, link])
     df=pd.DataFrame(lista_noticias, columns=['Manchete','Link'])
-    df['Link'] = df['Link'].apply(lambda x: f'<a href="{x}">Link</a>')
-    tabela_html = df.to_html(escape=False)
-    return Response(tabela_html, mimetype='text/html')
-
-if __name__ == '__main__':
-  app.run
+    df = df.head(5) # seleciona as últimas 5 notícias
+    df['Link'] = df['Link'].apply
