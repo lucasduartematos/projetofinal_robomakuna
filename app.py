@@ -49,5 +49,6 @@ def noticias_indigenas():
         link=noticia.find('a').get('href') 
         lista_noticias.append([manchete, link])
     df=pd.DataFrame(lista_noticias, columns=['Manchete','Link'])
-    df = df.head(5) # seleciona as últimas 5 notícias
-    df['Link'] = df['Link'].apply
+    df['Link'] = df['Link'].apply(lambda x: f'<a href="{x}">Link</a>')
+    tabela_html = df.to_html(escape=False)
+    return Response(tabela_html, mimetype='text/html')
