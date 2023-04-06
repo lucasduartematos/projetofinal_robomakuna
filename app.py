@@ -1,6 +1,4 @@
-pip install gunicorn
 pip install gspread
-
 
 import os
 import gspread
