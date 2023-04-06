@@ -1,25 +1,15 @@
 import os
 
-import gspread
 import requests
 import pandas as pd
 import telegram
-from flask import Flask, request, render_template
-from flask import Flask, request, jsonify, Response
-from oauth2client.service_account import ServiceAccountCredentials
-from tchan import ChannelScraper
+from flask import Flask, request, render_template, Response
 from bs4 import BeautifulSoup
 
 
 TELEGRAM_API_KEY = os.environ["TELEGRAM_API_KEY"]
 TELEGRAM_ADMIN_ID = os.environ["TELEGRAM_ADMIN_ID"]
-GOOGLE_SHEETS_CREDENTIALS = os.environ["GOOGLE_SHEETS_CREDENTIALS"]
-with open("credenciais.json", mode="w") as arquivo:
-  arquivo.write(GOOGLE_SHEETS_CREDENTIALS)
-conta = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
-api = gspread.authorize(conta)
-planilha_gsheets = api.open_by_key("194kfy5ezKLuREJV7UO5mlEkZSYbUMaUQC2q5hi-XKb4")
-sheet = planilha_gsheets.worksheet("robo_lucasduarte_bot")
+bot = telegram.Bot(token=TELEGRAM_API_KEY)
 app = Flask(__name__)
 
 menu = """
@@ -41,15 +31,22 @@ def contato():
 
 @app.route("/noticias")
 def noticias_indigenas():
-    requisicao=requests.get('https://www.cnnbrasil.com.br/tudo-sobre/indigenas/')
+    requisicao=requests.get('https://site-projeto-robomakuna.onrender.com/noticias')
     html=BeautifulSoup(requisicao.content)
-    manchetes_indigenas=html.findAll('li',{'class':'home__list__item'})
+    manchetes_indigenas=html.findAll('h2',{'class':'titulo'})
     lista_noticias=[]
     for noticia in manchetes_indigenas:
-        manchete=noticia.text
-        link=noticia.find('a').get('href') 
+        manchete=noticia.text.strip()
+        link=noticia.find('a').get('href')
         lista_noticias.append([manchete, link])
     df=pd.DataFrame(lista_noticias, columns=['Manchete','Link'])
-    df['Link'] = df['Link'].apply(lambda x: f'<a href="{x}">Link</a>')
-    tabela_html = df.to_html(escape=False)
-    return Response(tabela_html, mimetype='text/html')
+    df_top5 = df[:5]
+    noticias = []
+    for index, row in df_top5.iterrows():
+        noticias.append(f"{index+1}. {row['Manchete']} - {row['Link']}")
+    mensagem = "\n".join(noticias)
+    bot.send_message(chat_id=TELEGRAM_ADMIN_ID, text=mensagem)
+    return "Notícias enviadas para o chat no Telegram!"
+
+if __name__ == "__main__":
+    app.run()
