@@ -1,5 +1,6 @@
 flask
 gunicorn
+tchan
 gspread
 oauth2client
 pandas
