@@ -49,7 +49,8 @@ def noticias_indigenas():
         link=noticia.find('a').get('href') 
         lista_noticias.append([manchete, link])
     df=pd.DataFrame(lista_noticias, columns=['Manchete','Link'])
-    return df.tail(5)
+    tabela_html = df.tail(5).to_html()
+    return tabela_html
 
 @app.route("/noticias", methods=["POST"])
 def telegram_bot():
