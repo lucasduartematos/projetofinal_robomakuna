@@ -1,8 +1,10 @@
-**projetofinal_robomakuna**
+#**projetofinal_robomakuna:**#
 O Makuna é o projeto final do aluno Lucas Duarte Matos, feito no Master de Jornalismo de Dados, Automação e Data Storytelling do Insper. O robô raspa notícias sobre indígenas no site da CNN e Folha de São Paulo e transforma em um dataframe com manchetes e links atualizados diariamente e armazenados em um website do render.
 
+*"Makuna" é uma palavra que tem origem na língua indígena Tukano, falada por povos que habitam a região amazônica do Brasil, Colômbia e Venezuela. O termo pode ter diferentes significados dependendo do contexto, mas geralmente é associado à ideia de força, coragem e resiliência.*
 
->> **Análise de dados de notícias sobre indígenas no Brasil**
+
+>> #**Análise de dados de notícias sobre indígenas no Brasil**#
 
 A análise de dados é uma ferramenta poderosa para a compreensão de tendências e padrões em diversos setores da sociedade. 
 No contexto dos povos indígenas, a análise de notícias diárias pode ajudar a identificar padrões de violação de direitos humanos e a mapear a presença dessas comunidades 
