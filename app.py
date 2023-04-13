@@ -111,7 +111,8 @@ def noticias_funai():
     return Response(tabela_html, mimetype='text/html')
                     
   
-  if __name__ == '__main__':
-    app.run()
+if __name__ == '__main__':
+  app.run()
+  
 
 
