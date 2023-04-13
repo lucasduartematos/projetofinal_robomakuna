@@ -105,10 +105,15 @@ def noticias_funai():
     for noticia in noticias:
         link = noticia.find('a')['href']
         titulo = noticia.find('a').text.strip()
-        lista_noticias.append([titulo, link])
+        # Adiciona a tag "a" com o atributo "href" ao link da notícia
+        link_html = f'<a href="{link}">{link}</a>'
+        lista_noticias.append([titulo, link_html])
     df = pd.DataFrame(lista_noticias, columns=['Título', 'Link'])
-    tabela_html = df.to_html(escape=False)
+    # Substitui a coluna 'Link' pela coluna HTML
+    df['Link'] = df['Link'].apply(lambda x: BeautifulSoup(x, 'html.parser').prettify())
+    tabela_html = df.to_html(escape=False, index=False)
     return Response(tabela_html, mimetype='text/html')
+
                     
   
 if __name__ == '__main__':
