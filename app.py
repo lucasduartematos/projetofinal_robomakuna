@@ -75,21 +75,6 @@ def noticias_indigenas():
     df=pd.DataFrame(lista_noticias, columns=['Manchete','Link'])
     tabela_html = df.to_html(escape=False)
     return Response(tabela_html, mimetype='text/html')
-  
- @app.route("/noticias3")
- def noticias_funai():
-   url = 'https://www.gov.br/funai/pt-br/assuntos/noticias/2023'
-   response = requests.get(url)
-   soup = BeautifulSoup(response.content, 'html.parser')
-   noticias = soup.find_all('div', {'class': 'conteudo'})
-   lista_noticias = []
-   for noticia in noticias:
-       link = noticia.find('a')['href']
-       titulo = noticia.find('a').text.strip()
-       lista_noticias.append([titulo, link])
-   df = pd.DataFrame(lista_noticias, columns=['Título', 'Link'])
-   tabela_html = df.to_html(escape=False)
-    return Response(tabela_html, mimetype='text/html')
     
 @app.route("/noticias2")
 def noticias_indigenas_folha():
@@ -108,8 +93,23 @@ def noticias_indigenas_folha():
     df=pd.DataFrame(lista_noticias, columns=['Manchete','Link'])
     df['Link'] = df['Link'].apply(lambda x: f"<a href='{x}'>{x}</a>")
     tabela_html = df.to_html(escape=False)
-    return Response(tabela_html, mimetype='text/html'
+    return Response(tabela_html, mimetype='text/html')
   
+@app.route("/noticias3")
+def noticias_funai():
+    url = 'https://www.gov.br/funai/pt-br/assuntos/noticias/2023'
+    response = requests.get(url)
+    soup = BeautifulSoup(response.content, 'html.parser')
+    noticias = soup.find_all('div', {'class': 'conteudo'})
+    lista_noticias = []
+    for noticia in noticias:
+        link = noticia.find('a')['href']
+        titulo = noticia.find('a').text.strip()
+        lista_noticias.append([titulo, link])
+    df = pd.DataFrame(lista_noticias, columns=['Título', 'Link'])
+    tabela_html = df.to_html(escape=False)
+    return Response(tabela_html, mimetype='text/html')
+                    
   
   if __name__ == '__main__':
     app.run()
