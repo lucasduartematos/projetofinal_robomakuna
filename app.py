@@ -73,11 +73,6 @@ def noticias_indigenas_folha():
     df=pd.DataFrame(lista_noticias, columns=['Manchete','Link'])
     df['Link'] = df['Link'].apply(lambda x: f"<a href='{x}'>{x}</a>")
     tabela_html = df.to_html(escape=False)
-    
-    # Atualizando a página no Render
-    with open('/mnt/data/public/index.html', 'w') as f:
-        f.write(tabela_html)
-
     return Response(tabela_html, mimetype='text/html')
 
 
