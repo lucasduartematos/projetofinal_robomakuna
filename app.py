@@ -30,7 +30,28 @@ menu = """
 
 @app.route("/")
 def index():
-  return menu + "Olá, seja bem-vindo(a) ao site de notícias indígenas do jornalista Lucas Duarte"
+    return """
+    <html>
+        <head>
+            <title>Site de Notícias Indígenas</title>
+            <style>
+                body {
+                    background-color: #f1f1f1;
+                    font-size: 16px;
+                }
+            </style>
+        </head>
+        <body>
+            <div style="text-align:center">
+                <img src="http://www.prefeitura.sp.gov.br/cidade/secretarias/upload/2018%20Dia%20Povos%20Indigenas.jpg">
+            </div>
+            <br>
+            """ + menu + """
+            <br>
+            <p>Olá, seja bem-vindo(a) ao site de notícias indígenas do jornalista Lucas Duarte</p>
+        </body>
+    </html>
+    """
 
 @app.route("/sobre")
 def sobre():
