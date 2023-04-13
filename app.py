@@ -55,10 +55,6 @@ def noticias_indigenas():
     tabela_html = df.to_html(escape=False)
     return Response(tabela_html, mimetype='text/html')
 
-def planilha(df):
-  lista = df.values.tolist()
-  sheet.append_rows(lista)
-  return "Planilha escrita!"
 
 @app.route("/noticias2")
 def noticias_indigenas_folha():
@@ -79,8 +75,3 @@ def noticias_indigenas_folha():
     tabela_html = df.to_html(escape=False)
     return Response(tabela_html, mimetype='text/html')
 
-
-def planilha(df):
-  lista = df.values.tolist()
-  sheet.append_rows(lista)
-  return "Planilha escrita!"
