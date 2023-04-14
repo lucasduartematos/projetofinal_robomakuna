@@ -1,3 +1,5 @@
+# Importando o módulo os para trabalhar com variáveis de ambiente e importando as bibliotecas necessárias
+
 import os
 
 import gspread
@@ -11,6 +13,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 from tchan import ChannelScraper
 from bs4 import BeautifulSoup
 
+#Definindo as variáveis de ambiente e escrevendo as credenciais do Google Sheets em um arquivo local
 
 TELEGRAM_API_KEY = os.environ["TELEGRAM_API_KEY"]
 TELEGRAM_ADMIN_ID = os.environ["TELEGRAM_ADMIN_ID"]
@@ -21,7 +24,10 @@ conta = ServiceAccountCredentials.from_json_keyfile_name("credenciais.json")
 api = gspread.authorize(conta)
 planilha = api.open_by_key("194kfy5ezKLuREJV7UO5mlEkZSYbUMaUQC2q5hi-XKb4")
 sheet = planilha.worksheet("robo_lucasduarte_bot")
-app = Flask(__name__)
+app = Flask(__name__)  #Criando a aplicação web
+
+
+#Definindo a página inicial do meu website no Render | Incluindo uma imagem indígena | e mudando a cor de fundo
 
 menu = """
 <a href="/">Página inicial</a> | <a href="/noticias">Notícias Indígenas CNN</a> | <a href="/noticias2">Notícias Indígenas Folha de São Paulo</a> | <a href="/noticias3">Noticias Funai</a> | <a href="/sobre">Sobre o site</a> | <a href="/contato">Contato</a>
@@ -53,6 +59,8 @@ def index():
     </html>
     """
 
+#Definindo a página sobre e escrevendo um pouco sobre o trabalho | Definindo a página Contato
+  
 @app.route("/sobre")
 def sobre():
   return menu + "Robô de notícias indígenas: A análise de dados é uma ferramenta poderosa para a compreensão de tendências e padrões em diversos setores da sociedade. No contexto dos povos indígenas, a análise de notícias diárias pode ajudar a identificar padrões de violação de direitos humanos e a mapear a presença dessas comunidades em diferentes regiões. Nesse sentido, a utilização do método de raspagem em Python pode ser uma ferramenta valiosa para coletar e analisar notícias diárias sobre indígenas."
@@ -60,7 +68,9 @@ def sobre():
 @app.route("/contato")
 def contato():
   return menu + "Mais informações: Lucas Duarte, jornalista | lucasduartematos@gmail.com | (91) 981235649"
-  
+
+#Definindo a rota para a página de notícias dos sites CNN, Folha de São Paulo e as notícias da FUNAI
+
 @app.route("/noticias")
 def noticias_indigenas():
     requisicao=requests.get('https://www.cnnbrasil.com.br/tudo-sobre/indigenas/')
@@ -114,7 +124,7 @@ def noticias_funai():
     tabela_html = df.to_html(escape=False, index=False)
     return Response(tabela_html, mimetype='text/html')
 
-                    
+#Executando a aplicação Flask                    
   
 if __name__ == '__main__':
   app.run()
